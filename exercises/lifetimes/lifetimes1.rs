@@ -8,13 +8,15 @@
 // Execute `rustlings hint lifetimes1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
-fn longest(x: &str, y: &str) -> &str {
+
+// 函数不能返回一个借用，因为借用对象的有效范围只在该函数内
+// 如果一定要返回一个借用，需要声明生命周期
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
-        x
+        x.into()
     } else {
-        y
+        y.into()
     }
 }
 

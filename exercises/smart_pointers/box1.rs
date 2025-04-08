@@ -18,11 +18,13 @@
 //
 // Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
+
+// Box是一种 智能指针，用于在堆上分配数据。它的主要作用是将数据存储在堆上，而不是栈上，同时提供对数据的所有权和访问。
+// Box的其中一个作用便是解决递归类型无法在编译时确定大小的问题，因为作为指针的Box大小是固定的
 #[derive(PartialEq, Debug)]
 pub enum List {
-    Cons(i32, List),
+    Cons(i32, Box<List>),
     Nil,
 }
 
@@ -35,11 +37,12 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-    todo!()
+    List::Nil
 }
 
 pub fn create_non_empty_list() -> List {
-    todo!()
+    let next = Box::new(create_empty_list());
+    List::Cons(1, next)
 }
 
 #[cfg(test)]

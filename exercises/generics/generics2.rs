@@ -6,14 +6,16 @@
 // Execute `rustlings hint generics2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
-struct Wrapper {
-    value: u32,
+
+struct Wrapper<T> {
+    value: T,
 }
 
-impl Wrapper {
-    pub fn new(value: u32) -> Self {
+impl<T> Wrapper<T> {
+    pub fn new(value: T) -> Self {
+        // Rust 的惯用风格是尽量依赖编译器的类型推断
+        // Wrapper::<T> { value }
         Wrapper { value }
     }
 }
