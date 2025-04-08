@@ -56,8 +56,8 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
     // todo!();
-    // collection.into_iter().map(|map| count_iterator(map, value)).collect::<Vec<_>>().into_iter().fold(0, |acc, x| acc + x)
-    collection.into_iter().fold(0, |acc, map| count_iterator(map, value) + acc)
+    collection.into_iter().map(|map| count_iterator(map, value)).collect::<Vec<_>>().into_iter().fold(0, |acc, x| acc + x)
+    // collection.into_iter().fold(0, |acc, map| count_iterator(map, value) + acc)
 }
 
 #[cfg(test)]
