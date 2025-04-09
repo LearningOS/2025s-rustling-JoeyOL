@@ -13,7 +13,7 @@
 // pointer parameter, the ownership of some memory address. However, like
 // the text above, you still need to state how the contract is observed in
 // the comment on the code block.
-//
+// trust of soundness 健全性信任
 // NOTE: All the comments are for the readability and the maintainability of
 // your code, while the Rust compiler hands its trust of soundness of your
 // code to yourself! If you cannot prove the memory safety and soundness of
@@ -22,17 +22,19 @@
 // Execute `rustlings hint tests5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 /// # Safety
 ///
 /// The `address` must contain a mutable reference to a valid `u32` value.
 unsafe fn modify_by_address(address: usize) {
-    // TODO: Fill your safety notice of the code block below to match your
-    // code's behavior and the contract of this function. You may use the
-    // comment of the test below as your format reference.
+    // SAFETY: The caller must ensure that the `address` is a valid pointer
+    // to a `u32` value and that it is safe to dereference and modify.
     unsafe {
-        todo!("Your code goes here")
+        // &mut 安全的可变引用；自动解引用，无需显式操作自动解引用，无需显式操作
+        // *mut 不安全的原始指针；需要在 unsafe 块中使用。不会自动解引用，必须显式使用 * 操作符
+        let ptr = address as *mut u32;
+        *ptr = 0xAABBCCDD;
     }
 }
 

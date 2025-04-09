@@ -15,6 +15,7 @@ struct Person {
 
 // We implement the Default trait to use it as a fallback
 // when the provided string is not convertible into a Person object
+// 创建失败时返回的默认方法
 impl Default for Person {
     fn default() -> Person {
         Person {
@@ -40,10 +41,27 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
+
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() <= 0 {
+            return Person::default();
+        } 
+        let parts: Vec<&str> = s.split(',').collect();
+
+        if parts.len() != 2 || parts[0].len() <= 0 {
+            return Person::default();
+        }
+        if !parts[1].parse::<usize>().is_err() {
+            return Person {
+                name: parts[0].into(),
+                // ::是用来显式的指明解析的类型
+                age: parts[1].parse::<usize>().unwrap()
+            };
+        }
+        
+        return Person::default();
     }
 }
 
