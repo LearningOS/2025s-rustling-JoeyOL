@@ -2,7 +2,7 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
+
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -29,13 +29,13 @@ struct LinkedList<T> {
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T> LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> LinkedList<T> {
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -69,14 +69,44 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge(mut list_a:LinkedList<T>,mut list_b:LinkedList<T>) -> Self
 	{
 		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+        if list_a.length == 0 {
+            return list_b;
         }
+        if list_b.length == 0 {
+            return list_a;
+        }
+        let mut merge_list = LinkedList::<T>::new();
+        let mut index_a: i32 = 0;
+        let mut index_b: i32 = 0;
+        while (0..(list_a.length as i32)).contains(&index_a) && (0..(list_b.length as i32)).contains(&index_b) {
+            let ele_a = list_a.get(index_a.clone()).unwrap();
+            let ele_b = list_b.get(index_b.clone()).unwrap();
+            if ele_a < ele_b {
+                merge_list.add((*ele_a).clone());
+                index_a += 1;
+            } else {
+                merge_list.add((*ele_b).clone());
+                index_b += 1;
+            }
+        }
+
+        while (0..(list_a.length as i32)).contains(&index_a) {
+            let ele_a = list_a.get(index_a.clone()).unwrap();
+
+            merge_list.add((*ele_a).clone());
+            index_a += 1;
+        }
+
+        while (0..(list_b.length as i32)).contains(&index_b) {
+            let ele_b = list_b.get(index_b.clone()).unwrap();
+            merge_list.add((*ele_b).clone());
+            index_b += 1;
+        }
+
+        merge_list
 	}
 }
 
